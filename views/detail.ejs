@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mina's To-Do List</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/public/main.css" />
+  </head>
+  <body>
+    <%- include('nav.html') %>
+
+    <!-- EJS: HTML을 빨리 쓸 수 있게 도와주는 템플릿 엔진 라이브러리 -->
+    <div class="container mt-4">
+      <h4 class="mb-5 mt-4"><strong>할일 상세</strong></h4>
+
+      <div class="card text-center">
+        <div class="card-header">상세 내용</div>
+        <div class="card-body">
+          <h5 class="card-title">제목: <%= data.title %></h5>
+          <p class="card-text">날짜: <%= data.date %></p>
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm go-to-list"
+          >
+            리스트로 이동
+          </button>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- AJAX jquery 사용하기 위해 추가함 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script>
+      // *** 상세 보기 *** //
+      $(".go-to-list").click(() => {
+        location.assign("/list");
+      });
+    </script>
+  </body>
+</html>
