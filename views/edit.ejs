@@ -18,15 +18,24 @@
         <%- include('nav.html') %>
 
         <div class="container mt-4">
-            <h4 class="mb-5 mt-4"><strong>할 일 작성</strong></h4>
+            <h4 class="mb-5 mt-4"><strong>할 일 수정</strong></h4>
 
             <div class="container mt-3">
                 <!-- 전송 누를 시 GET 요청이냐 POST 요청이냐를 아래에 method 에 넣어줌 -->
-                <form action="/add" method="POST">
+                <form action="/edit?_method=PUT" method="POST">
                     <div class="mb-3">
                         <label for="title" class="form-label">할 일</label>
+                        <!-- 몰래 input을 하나 만들고 여기에 id를 함께 넣어 보낸다 -->
                         <input
                             type="text"
+                            value="<%= post._id %>"
+                            class="form-control"
+                            name="id"
+                            style="display: none"
+                        />
+                        <input
+                            type="text"
+                            value="<%= post.title %>"
                             class="form-control"
                             name="title"
                             placeholder="할 일을 적어주세요."
@@ -36,17 +45,17 @@
                         <label for="date" class="form-label">날짜</label>
                         <input
                             type="date"
+                            value="<%= post.date %>"
                             class="form-control"
                             name="date"
                             placeholder="날짜를 입력해 주세요."
                         />
                     </div>
-
                     <button
                         type="submit"
-                        class="btn btn-outline-danger btn-sm write"
+                        class="btn btn-outline-warning btn-sm edit"
                     >
-                        저장
+                        수정 내용 저장
                     </button>
                     <button
                         type="button"
@@ -57,7 +66,6 @@
                 </form>
             </div>
         </div>
-
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
@@ -66,12 +74,7 @@
 
         <!-- AJAX jquery 사용하기 위해 추가함 -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script>
-            // *** 리스트로 이동 *** //
-            $('.write').click(() => {
-                alert('가만 있으면 되는데 자꾸만 뭘 그렇게 할라 그래');
-            });
-        </script>
+
         <script>
             // *** 리스트로 이동 *** //
             $('.go-to-list').click(() => {

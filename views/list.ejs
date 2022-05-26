@@ -1,101 +1,126 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mina's To-Do List</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <%- include('nav.html') %>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Mina's To-Do List</title>
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+            crossorigin="anonymous"
+        />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/public/main.css" />
+    </head>
+    <body>
+        <%- include('nav.html') %>
 
-    <!-- EJS: HTML을 빨리 쓸 수 있게 도와주는 템플릿 엔진 라이브러리 -->
-    <div class="container mt-4">
-      <h4 class="mb-5 mt-4"><strong>할일 리스트</strong></h4>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">번호</th>
-            <th scope="col">할 일</th>
-            <th scope="col">날짜</th>
-            <th scope="col">작업</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for(let i =0 ; i< posts.length; i++){%>
-          <tr>
-            <td><%= posts[i]._id %></td>
-            <td><%= posts[i].title %></td>
-            <td><%= posts[i].date %></td>
-            <td>
-              <!-- html에는 DELETE 요청이 없음. (라이브러리를 설치해서 사용하거나, AJAX를 사용하는 방법으로 진행함) -->
-              <!-- AJAX: 서버와 통신할 수 있게 도와주는 JS 문법, 새로고침이 없이 서버에게 요청하는 방법임(요청은 잘 처리됨) -->
-              <button
-                type="button"
-                class="btn btn-outline-primary btn-sm detail"
-                data-id="<%= posts[i]._id %>"
-              >
-                상세 보기
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-danger btn-sm delete"
-                data-id="<%= posts[i]._id %>"
-              >
-                삭제
-              </button>
-            </td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-    </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-      crossorigin="anonymous"
-    ></script>
-    <!-- AJAX jquery 사용하기 위해 추가함 -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-      // *** 상세 보기 *** //
-      $(".detail").click((e) => {
-        const id = e.target.dataset.id;
-        location.assign("/detail/" + id);
-      });
+        <!-- EJS: HTML을 빨리 쓸 수 있게 도와주는 템플릿 엔진 라이브러리 -->
+        <div class="container mt-4">
+            <h4 class="mb-5 mt-4"><strong>할 일 리스트</strong></h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">할 일</th>
+                        <th scope="col">날짜</th>
+                        <th scope="col">작업</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i =0 ; i< posts.length; i++){%>
+                    <tr>
+                        <td><%= posts[i]._id %></td>
+                        <td><%= posts[i].title %></td>
+                        <td><%= posts[i].date %></td>
+                        <td>
+                            <!-- html에는 DELETE 요청이 없음. (라이브러리를 설치해서 사용하거나, AJAX를 사용하는 방법으로 진행함) -->
+                            <!-- AJAX: 서버와 통신할 수 있게 도와주는 JS 문법, 새로고침이 없이 서버에게 요청하는 방법임(요청은 잘 처리됨) -->
+                            <button
+                                type="button"
+                                class="btn btn-outline-primary btn-sm detail"
+                                data-id="<%= posts[i]._id %>"
+                            >
+                                상세 보기
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-outline-warning btn-sm edit"
+                                data-id="<%= posts[i]._id %>"
+                            >
+                                수정 하기
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-outline-danger btn-sm delete"
+                                data-id="<%= posts[i]._id %>"
+                            >
+                                완료 처리
+                            </button>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"
+        ></script>
+        <!-- AJAX jquery 사용하기 위해 추가함 -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+            // *** 상세 보기 *** //
+            $('.detail').click((e) => {
+                const id = e.target.dataset.id;
+                location.assign('/detail/' + id);
+            });
 
-      // *** 삭제 *** //
-      // class가 delete인 것을 클릭하면 AJAX 요청을 실행해 주세요
-      $(".delete").click((e) => {
-        // AJAX 작성 방법
-        // $.ajax({
-        //   method: "DELETE",
-        //   url: "요청할 경로",
-        //   data: "요청과 함께 보낼 데이터",
-        // }).done((결과)=>{});
+            // *** 삭제 *** //
+            // class가 delete인 것을 클릭하면 AJAX 요청을 실행해 주세요
+            $('.delete').click((e) => {
+                // AJAX 작성 방법
+                // $.ajax({
+                //   method: "DELETE",
+                //   url: "요청할 경로",
+                //   data: "요청과 함께 보낼 데이터",
+                // }).done((결과)=>{});
 
-        const id = e.target.dataset.id;
-        const somethingClicked = $(this);
+                const id = e.target.dataset.id;
+                const somethingClicked = $(this);
 
-        $.ajax({
-          method: "DELETE",
-          url: "/delete",
-          data: { _id: id },
-        })
-          .done((res) => {
-            // 페이지를 강제로 새로고침 해주세요 또는
-            // 삭제 버튼을 누른 요소를 제거/안보이게해주세요
-            // somethingClicked.parents("tr").fadeOut();
-            location.reload();
-            alert("삭제 성공!");
-          })
-          .fail(() => {});
-      });
-    </script>
-  </body>
+                $.ajax({
+                    method: 'DELETE',
+                    url: '/delete',
+                    data: { _id: id },
+                })
+                    .done((res) => {
+                        // 페이지를 강제로 새로고침 해주세요 또는
+                        // 삭제 버튼을 누른 요소를 제거/안보이게해주세요
+                        // somethingClicked.parents("tr").fadeOut();
+                        location.reload();
+                        alert('참 잘했어요! 짝짝짝!');
+                    })
+                    .fail(() => {});
+            });
+
+            // *** 수정 *** //
+            $('.edit').click((e) => {
+                // AJAX 작성 방법
+                // $.ajax({
+                //   method: "DELETE",
+                //   url: "요청할 경로",
+                //   data: "요청과 함께 보낼 데이터",
+                // }).done((결과)=>{});
+
+                const id = e.target.dataset.id;
+                const somethingClicked = $(this);
+
+                location.assign('/edit/' + id);
+            });
+        </script>
+    </body>
 </html>
